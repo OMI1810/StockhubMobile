@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">QR Scanner</string>
+    <string name="login_title">Вход в систему</string>
+    <string name="hint_username">Имя пользователя</string>
+    <string name="hint_password">Пароль</string>
+    <string name="remember_me">Запомнить меня</string>
+    <string name="login_button">Войти</string>
+    <string name="test_credentials">Тестовые данные:\nadmin / 123456</string>
 </resources>

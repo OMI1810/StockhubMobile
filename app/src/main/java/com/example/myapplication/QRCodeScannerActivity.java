@@ -17,8 +17,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.OptIn;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.camera.core.Camera;
 import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ExperimentalGetImage;
 import androidx.camera.core.ImageAnalysis;
@@ -56,6 +54,7 @@ public class QRCodeScannerActivity extends AppCompatActivity {
     private Button copyButton;
     private Button shareButton;
     private Button newScanButton;
+    private Button logoutButton;
     private LinearLayout formatCard;
     private LinearLayout contentCard;
     private LinearLayout analysisCard;
@@ -74,22 +73,12 @@ public class QRCodeScannerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrcode_scanner);
 
-        setupToolbar();
         initViews();
         setupButtons();
         setupBarcodeScanner();
 
         cameraExecutor = Executors.newSingleThreadExecutor();
         checkCameraPermission();
-    }
-
-    private void setupToolbar() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
-        }
     }
 
     private void initViews() {
@@ -102,6 +91,7 @@ public class QRCodeScannerActivity extends AppCompatActivity {
         copyButton = findViewById(R.id.copyButton);
         shareButton = findViewById(R.id.shareButton);
         newScanButton = findViewById(R.id.newScanButton);
+        logoutButton = findViewById(R.id.logoutButton); // Добавлена инициализация
         formatCard = findViewById(R.id.format_card);
         contentCard = findViewById(R.id.content_card);
         analysisCard = findViewById(R.id.analysis_card);
@@ -112,8 +102,16 @@ public class QRCodeScannerActivity extends AppCompatActivity {
         copyButton.setOnClickListener(v -> copyToClipboard());
         shareButton.setOnClickListener(v -> shareResult());
         newScanButton.setOnClickListener(v -> startNewScan());
+        logoutButton.setOnClickListener(v -> logout());
     }
 
+    private void logout() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    // Остальной код остается без изменений...
     private void setupBarcodeScanner() {
         BarcodeScannerOptions options = new BarcodeScannerOptions.Builder()
                 .setBarcodeFormats(
@@ -199,14 +197,12 @@ public class QRCodeScannerActivity extends AppCompatActivity {
                 return;
             }
 
-            // Пропускаем кадры для оптимизации
             frameCounter++;
             if (frameCounter % FRAME_SKIP != 0) {
                 imageProxy.close();
                 return;
             }
 
-            // Защита от слишком частого анализа
             long currentTime = System.currentTimeMillis();
             if (currentTime - lastAnalysisTime < ANALYSIS_INTERVAL) {
                 imageProxy.close();
@@ -214,17 +210,14 @@ public class QRCodeScannerActivity extends AppCompatActivity {
             }
             lastAnalysisTime = currentTime;
 
-            // Получаем изображение из ImageProxy
             android.media.Image mediaImage = imageProxy.getImage();
             if (mediaImage == null) {
                 imageProxy.close();
                 return;
             }
 
-            // Создаем InputImage для ML Kit
             InputImage image = InputImage.fromMediaImage(mediaImage, imageProxy.getImageInfo().getRotationDegrees());
 
-            // Обрабатываем изображение с помощью ML Kit
             barcodeScanner.process(image)
                     .addOnSuccessListener(barcodes -> {
                         if (!barcodes.isEmpty() && isScanning) {
@@ -301,7 +294,6 @@ public class QRCodeScannerActivity extends AppCompatActivity {
         analysisCard.setVisibility(View.VISIBLE);
         actionButtons.setVisibility(View.VISIBLE);
 
-        // Вибрация при успешном сканировании
         try {
             android.os.Vibrator vibrator = (android.os.Vibrator) getSystemService(android.content.Context.VIBRATOR_SERVICE);
             if (vibrator != null && vibrator.hasVibrator()) {
@@ -387,7 +379,6 @@ public class QRCodeScannerActivity extends AppCompatActivity {
         }
     }
 
-    // Методы анализа контента
     private boolean isURL(String text) {
         return text.startsWith("http://") || text.startsWith("https://") ||
                 text.startsWith("www.") || text.contains(".com") ||
