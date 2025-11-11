@@ -1,30 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Прозрачный центр -->
-    <item>
-        <shape android:shape="rectangle">
-            <solid android:color="#00000000" />
-            <stroke
-                android:width="2dp"
-                android:color="#FFFFFF" />
-            <corners android:radius="16dp" />
-        </shape>
-    </item>
-
-    <!-- Уголки -->
-    <item
-        android:left="-10dp"
-        android:top="-10dp"
-        android:right="10dp"
-        android:bottom="10dp">
-        <rotate
-            android:fromDegrees="0">
-            <shape android:shape="rectangle">
-                <stroke
-                    android:width="4dp"
-                    android:color="#4CAF50" />
-                <solid android:color="#00000000" />
-            </shape>
-        </rotate>
-    </item>
-</layer-list>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <stroke
+        android:width="4dp"
+        android:color="#FFFFFF" />
+    <solid android:color="#00000000" />
+    <corners android:radius="16dp" />
+</shape>
