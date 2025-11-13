@@ -3,256 +3,166 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#ffffff">
+    android:background="@color/background_light"
+    android:padding="8dp">
 
-    <!-- Верхняя часть - сканер -->
-    <FrameLayout
-        android:id="@+id/scanner_container"
+    <!-- Верхняя часть - информация и сканер -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#000000">
-
-        <!-- PreviewView для CameraX -->
-        <androidx.camera.view.PreviewView
-            android:id="@+id/camera_preview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <!-- Overlay для сканера -->
-        <View
-            android:layout_width="250dp"
-            android:layout_height="250dp"
-            android:layout_gravity="center"
-            android:background="@drawable/scanner_frame" />
-
-        <!-- Текст инструкции -->
-        <TextView
-            android:id="@+id/scan_instruction"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center"
-            android:text="Наведите камеру на QR-код товара"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:gravity="center"
-            android:padding="16dp"
-            android:background="#80000000" />
-
-    </FrameLayout>
-
-    <!-- Нижняя часть - результаты -->
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1.5"
+        android:layout_weight="1.2"
+        android:orientation="vertical"
         android:padding="16dp"
-        android:background="#f5f5f5">
+        android:layout_margin="8dp"
+        android:background="@drawable/card_background">
 
+        <!-- Информация об операции и складе -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
 
-            <!-- Информация об операции -->
             <TextView
                 android:id="@+id/operationTypeText"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="Операция: "
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="#2196F3"
-                android:gravity="center"
-                android:layout_marginBottom="16dp"
-                android:padding="8dp"
-                android:background="#E3F2FD" />
-
-            <!-- Статус сканирования -->
-            <TextView
-                android:id="@+id/statusText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Готов к сканированию"
                 android:textSize="16sp"
-                android:textColor="#4CAF50"
-                android:gravity="center"
-                android:layout_marginBottom="16dp" />
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:drawablePadding="8dp" />
 
-            <!-- Карточка с форматом -->
-            <LinearLayout
-                android:id="@+id/format_card"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/warehouseText"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="16dp"
-                android:background="#E3F2FD"
-                android:layout_marginBottom="12dp"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="📄"
-                    android:textSize="20sp"
-                    android:layout_marginEnd="12dp" />
-
-                <TextView
-                    android:id="@+id/formatText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Формат: "
-                    android:textSize="14sp"
-                    android:textColor="#1976D2"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <!-- Карточка с содержимым -->
-            <LinearLayout
-                android:id="@+id/content_card"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp"
-                android:background="#FFFFFF"
-                android:layout_marginBottom="12dp"
-                android:elevation="2dp"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="QR-код товара"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="#333333"
-                    android:layout_marginBottom="8dp" />
-
-                <TextView
-                    android:id="@+id/resultText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textSize="14sp"
-                    android:textColor="#666666"
-                    android:background="#f8f8f8"
-                    android:padding="12dp"
-                    android:textIsSelectable="true"
-                    android:fontFamily="monospace" />
-
-            </LinearLayout>
-
-            <!-- Карточка с анализом -->
-            <LinearLayout
-                android:id="@+id/analysis_card"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp"
-                android:background="#FFFFFF"
-                android:layout_marginBottom="16dp"
-                android:elevation="2dp"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Информация об операции"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="#333333"
-                    android:layout_marginBottom="8dp" />
-
-                <TextView
-                    android:id="@+id/contentAnalysis"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textSize="14sp"
-                    android:textColor="#666666"
-                    android:lineSpacingExtra="4dp" />
-
-            </LinearLayout>
-
-            <!-- Кнопки действий -->
-            <LinearLayout
-                android:id="@+id/action_buttons"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="2"
-                    android:layout_marginBottom="8dp">
-
-                    <Button
-                        android:id="@+id/copyButton"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Копировать"
-                        android:backgroundTint="#2196F3"
-                        android:textColor="#FFFFFF"
-                        android:layout_marginEnd="4dp" />
-
-                    <Button
-                        android:id="@+id/shareButton"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Поделиться"
-                        android:backgroundTint="#4CAF50"
-                        android:textColor="#FFFFFF"
-                        android:layout_marginStart="4dp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="2"
-                    android:layout_marginBottom="8dp">
-
-                    <Button
-                        android:id="@+id/newScanButton"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Новое сканирование"
-                        android:backgroundTint="#9C27B0"
-                        android:textColor="#FFFFFF"
-                        android:layout_marginEnd="4dp" />
-
-                    <Button
-                        android:id="@+id/sendToServerButton"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Отправить на сервер"
-                        android:backgroundTint="#FF9800"
-                        android:textColor="#FFFFFF"
-                        android:layout_marginStart="4dp" />
-
-                </LinearLayout>
-
-                <Button
-                    android:id="@+id/backButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Назад к выбору операции"
-                    android:backgroundTint="#795548"
-                    android:textColor="#FFFFFF" />
-
-            </LinearLayout>
+                android:layout_weight="1"
+                android:text="Склад: "
+                android:textSize="14sp"
+                android:textColor="@color/text_secondary"
+                android:gravity="end" />
 
         </LinearLayout>
 
-    </ScrollView>
+        <!-- Статус сканирования -->
+        <TextView
+            android:id="@+id/statusText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Готов к сканированию"
+            android:textSize="16sp"
+            android:textColor="@color/status_info"
+            android:gravity="center"
+            android:padding="12dp"
+            android:background="#E7F3FF"
+            android:layout_marginBottom="16dp"
+            android:drawablePadding="8dp"
+            android:drawableStart="@android:drawable/ic_menu_camera" />
+
+        <!-- Сканер -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/card_background">
+
+            <androidx.camera.view.PreviewView
+                android:id="@+id/camera_preview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <View
+                android:layout_width="280dp"
+                android:layout_height="280dp"
+                android:layout_gravity="center"
+                android:background="@drawable/scanner_frame_modern" />
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <!-- Нижняя часть - список товаров -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:background="@drawable/card_background"
+        android:padding="16dp"
+        android:layout_margin="8dp">
+
+        <!-- Заголовок списка -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="📦 Отсканированные товары"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary"
+            android:gravity="center"
+            android:padding="12dp"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Список товаров -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewProducts"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Кнопки управления -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <!-- Первая строка кнопок -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/buttonHistory"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="📋 История операций"
+                    android:textSize="14sp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/button_secondary" />
+
+                <Button
+                    android:id="@+id/buttonNewSession"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="🔄 Новая сессия"
+                    android:textSize="14sp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/button_accent" />
+
+            </LinearLayout>
+
+            <!-- Вторая строка кнопок -->
+            <Button
+                android:id="@+id/buttonChangeOperation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="🔄 Сменить операцию"
+                android:textSize="14sp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/button_primary" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

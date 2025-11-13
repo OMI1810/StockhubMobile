@@ -22,6 +22,8 @@ public class OperationSelectionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_operation_selection);
 
+        sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+
         initViews();
         setupUserInfo();
         setupButtons();
@@ -35,9 +37,9 @@ public class OperationSelectionActivity extends AppCompatActivity {
     }
 
     private void setupUserInfo() {
-        sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         String fullName = sharedPreferences.getString("full_name", "Пользователь");
-        textViewWelcome.setText("Добро пожаловать, " + fullName + "!");
+        String warehouseName = sharedPreferences.getString("warehouse_name", "Не выбран");
+        textViewWelcome.setText("Добро пожаловать, " + fullName + "!\nСклад: " + warehouseName);
     }
 
     private void setupButtons() {
@@ -50,6 +52,7 @@ public class OperationSelectionActivity extends AppCompatActivity {
         Intent intent = new Intent(OperationSelectionActivity.this, QRCodeScannerActivity.class);
         intent.putExtra("OPERATION_TYPE", operationType);
         startActivity(intent);
+        finish();
     }
 
     private void logout() {
@@ -66,7 +69,8 @@ public class OperationSelectionActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        // Запрещаем возврат к логину по кнопке назад
+        // Запрещаем возврат к сканированию склада, только выход
+        super.onBackPressed();
         Toast.makeText(this, "Для выхода используйте кнопку выхода", Toast.LENGTH_SHORT).show();
     }
 }

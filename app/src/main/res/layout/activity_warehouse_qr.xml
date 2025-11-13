@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background_light"
+    android:padding="16dp"
+    android:gravity="center">
+
+    <!-- Основной контейнер -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/card_background"
+        android:padding="32dp">
+
+        <!-- Заголовок -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🔍 Сканирование склада"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary"
+            android:gravity="center"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Статус -->
+        <TextView
+            android:id="@+id/statusText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Наведите камеру на QR-код склада"
+            android:textSize="16sp"
+            android:textColor="@color/status_info"
+            android:gravity="center"
+            android:padding="16dp"
+            android:background="#E7F3FF"
+            android:layout_marginBottom="24dp"
+            android:drawablePadding="8dp"
+            android:drawableStart="@android:drawable/ic_menu_camera" />
+
+        <!-- Сканер -->
+        <FrameLayout
+            android:layout_width="280dp"
+            android:layout_height="280dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="32dp"
+            android:background="@drawable/card_background">
+
+            <androidx.camera.view.PreviewView
+                android:id="@+id/camera_preview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <View
+                android:layout_width="240dp"
+                android:layout_height="240dp"
+                android:layout_gravity="center"
+                android:background="@drawable/scanner_frame_modern" />
+
+        </FrameLayout>
+
+        <!-- Кнопка ручного ввода -->
+        <Button
+            android:id="@+id/buttonManual"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Демо режим (тестирование)"
+            android:textSize="14sp"
+            android:background="@drawable/button_accent" />
+
+    </LinearLayout>
+
+</LinearLayout>

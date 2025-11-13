@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/card_background"
+    android:padding="20dp"
+    android:layout_margin="8dp"
+    android:elevation="2dp">
+
+    <!-- Верхняя строка: тип кода и кнопка удаления -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="12dp">
+
+        <TextView
+            android:id="@+id/textCodeType"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Тип кода"
+            android:textSize="13sp"
+            android:textColor="@color/text_secondary"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/buttonRemove"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="×"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:background="@drawable/button_danger" />
+
+    </LinearLayout>
+
+    <!-- Содержимое кода -->
+    <TextView
+        android:id="@+id/textCodeContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Код"
+        android:textSize="16sp"
+        android:textColor="@color/primary_color"
+        android:textStyle="bold"
+        android:background="#F0F4FF"
+        android:padding="16dp"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="monospace"
+        android:gravity="center" />
+
+    <!-- Управление количеством -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Количество:"
+            android:textSize="14sp"
+            android:textColor="@color/text_primary" />
+
+        <Button
+            android:id="@+id/buttonDecrease"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:text="-"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:background="@drawable/button_accent" />
+
+        <TextView
+            android:id="@+id/textQuantity"
+            android:layout_width="60dp"
+            android:layout_height="48dp"
+            android:text="1"
+            android:textSize="18sp"
+            android:textColor="@color/text_primary"
+            android:gravity="center"
+            android:background="@drawable/edit_text_background"
+            android:textStyle="bold"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp" />
+
+    </LinearLayout>
+
+    <!-- Время -->
+    <TextView
+        android:id="@+id/textTimestamp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Время"
+        android:textSize="12sp"
+        android:textColor="@color/text_light"
+        android:layout_marginBottom="16dp"
+        android:gravity="end" />
+
+    <!-- Информация о товаре -->
+    <EditText
+        android:id="@+id/editProductInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Введите описание товара..."
+        android:textSize="14sp"
+        android:minLines="2"
+        android:maxLines="3"
+        android:background="@drawable/edit_text_background"
+        android:padding="16dp"
+        android:textColor="@color/text_primary" />
+
+</LinearLayout>

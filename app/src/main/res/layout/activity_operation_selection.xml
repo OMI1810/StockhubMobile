@@ -1,90 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#f5f5f5"
-    android:padding="24dp">
+    android:background="@color/background_light"
+    android:padding="24dp"
+    android:gravity="center">
 
-    <!-- Заголовок -->
-    <TextView
-        android:id="@+id/textViewWelcome"
+    <!-- Основной контейнер -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Добро пожаловать!"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:textColor="#333333"
-        android:gravity="center"
-        android:layout_marginBottom="40dp"
-        android:padding="16dp" />
+        android:orientation="vertical"
+        android:background="@drawable/card_background"
+        android:padding="32dp">
 
-    <!-- Карточка выбора операции -->
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="8dp"
-        android:layout_marginBottom="24dp">
-
-        <LinearLayout
+        <!-- Заголовок -->
+        <TextView
+            android:id="@+id/textViewWelcome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="24dp">
+            android:text="Добро пожаловать!"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary"
+            android:gravity="center"
+            android:layout_marginBottom="32dp"
+            android:lineSpacingExtra="4dp" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Выберите операцию"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="#333333"
-                android:gravity="center"
-                android:layout_marginBottom="24dp" />
+        <!-- Заголовок выбора операции -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Выберите операцию"
+            android:textSize="18sp"
+            android:textColor="@color/text_secondary"
+            android:gravity="center"
+            android:layout_marginBottom="24dp" />
 
-            <!-- Кнопка отгрузки -->
-            <Button
-                android:id="@+id/buttonShipment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="📤 Отгрузка со склада"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:backgroundTint="#4CAF50"
-                android:textColor="#FFFFFF"
-                android:padding="20dp"
-                android:layout_marginBottom="16dp"
-                android:drawablePadding="8dp" />
+        <!-- Кнопка загрузки -->
+        <Button
+            android:id="@+id/buttonLoading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="📥 Загрузка на склад"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp"
+            android:drawablePadding="12dp"
+            android:background="@drawable/button_primary" />
 
-            <!-- Кнопка загрузки -->
-            <Button
-                android:id="@+id/buttonLoading"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="📥 Загрузка на склад"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:backgroundTint="#2196F3"
-                android:textColor="#FFFFFF"
-                android:padding="20dp"
-                android:layout_marginBottom="8dp"
-                android:drawablePadding="8dp" />
+        <!-- Кнопка отгрузки -->
+        <Button
+            android:id="@+id/buttonShipment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="📤 Отгрузка со склада"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="32dp"
+            android:drawablePadding="12dp"
+            android:background="@drawable/button_secondary" />
 
-        </LinearLayout>
+        <!-- Кнопка выхода -->
+        <Button
+            android:id="@+id/buttonLogout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Выйти из системы"
+            android:textSize="14sp"
+            android:background="@drawable/button_danger" />
 
-    </androidx.cardview.widget.CardView>
-
-    <!-- Кнопка выхода -->
-    <Button
-        android:id="@+id/buttonLogout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Выйти из системы"
-        android:textSize="16sp"
-        android:backgroundTint="#F44336"
-        android:textColor="#FFFFFF"
-        android:padding="12dp" />
+    </LinearLayout>
 
 </LinearLayout>
