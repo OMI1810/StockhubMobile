@@ -18,14 +18,14 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText editTextUsername, editTextPassword;
+    private EditText editTextEmail, editTextPassword;
     private CheckBox checkBoxRemember;
     private Button buttonLogin;
     private ProgressBar progressBar;
 
     private SharedPreferences sharedPreferences;
     private static final String PREFS_NAME = "WarehousePrefs";
-    private static final String KEY_USERNAME = "username";
+    private static final String KEY_EMAIL = "email";
     private static final String KEY_PASSWORD = "password";
     private static final String KEY_REMEMBER = "remember";
     private static final String KEY_TOKEN = "token";
@@ -41,16 +41,19 @@ public class LoginActivity extends AppCompatActivity {
         setupPreferences();
         setupLoginButton();
 
-        // Автоматический вход если есть сохраненный токен
         checkAutoLogin();
     }
 
     private void initViews() {
-        editTextUsername = findViewById(R.id.editTextUsername);
+        editTextEmail = findViewById(R.id.editTextUsername); // Используем существующее поле, но для email
         editTextPassword = findViewById(R.id.editTextPassword);
         checkBoxRemember = findViewById(R.id.checkBoxRemember);
         buttonLogin = findViewById(R.id.buttonLogin);
         progressBar = findViewById(R.id.progressBar);
+
+        // Устанавливаем hint для email
+        editTextEmail.setHint("Email");
+        editTextEmail.setInputType(android.text.InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
     }
 
     private void setupPreferences() {
@@ -58,10 +61,10 @@ public class LoginActivity extends AppCompatActivity {
 
         boolean rememberMe = sharedPreferences.getBoolean(KEY_REMEMBER, false);
         if (rememberMe) {
-            String savedUsername = sharedPreferences.getString(KEY_USERNAME, "");
+            String savedEmail = sharedPreferences.getString(KEY_EMAIL, "");
             String savedPassword = sharedPreferences.getString(KEY_PASSWORD, "");
 
-            editTextUsername.setText(savedUsername);
+            editTextEmail.setText(savedEmail);
             editTextPassword.setText(savedPassword);
             checkBoxRemember.setChecked(true);
         }
@@ -69,9 +72,15 @@ public class LoginActivity extends AppCompatActivity {
 
     private void checkAutoLogin() {
         String savedToken = sharedPreferences.getString(KEY_TOKEN, "");
-        if (!savedToken.isEmpty()) {
-            // Переход сразу к выбору операции если есть валидный токен
-            Intent intent = new Intent(LoginActivity.this, OperationSelectionActivity.class);
+        String savedWarehouse = sharedPreferences.getString("warehouse_id", "");
+        if (!savedToken.isEmpty() && !savedWarehouse.isEmpty()) {
+            // Переход сразу к сканированию если есть токен и выбран склад
+            Intent intent = new Intent(LoginActivity.this, QRCodeScannerActivity.class);
+            startActivity(intent);
+            finish();
+        } else if (!savedToken.isEmpty()) {
+            // Переход к сканированию склада если есть токен но нет склада
+            Intent intent = new Intent(LoginActivity.this, WarehouseQRActivity.class);
             startActivity(intent);
             finish();
         }
@@ -82,11 +91,16 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void attemptLogin() {
-        String username = editTextUsername.getText().toString().trim();
+        String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
-        if (TextUtils.isEmpty(username)) {
-            editTextUsername.setError("Введите имя пользователя");
+        if (TextUtils.isEmpty(email)) {
+            editTextEmail.setError("Введите email");
+            return;
+        }
+
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            editTextEmail.setError("Введите корректный email");
             return;
         }
 
@@ -96,11 +110,11 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         showProgress(true);
-        performLogin(username, password);
+        performLogin(email, password);
     }
 
-    private void performLogin(String username, String password) {
-        LoginRequest loginRequest = new LoginRequest(username, password);
+    private void performLogin(String email, String password) {
+        LoginRequest loginRequest = new LoginRequest(email, password);
         ApiService apiService = RetrofitClient.getApiService();
 
         Call<LoginResponse> call = apiService.login(loginRequest);
@@ -113,7 +127,7 @@ public class LoginActivity extends AppCompatActivity {
                     LoginResponse loginResponse = response.body();
 
                     if (loginResponse.isSuccess()) {
-                        handleSuccessfulLogin(loginResponse, username, password);
+                        handleSuccessfulLogin(loginResponse, email, password);
                     } else {
                         Toast.makeText(LoginActivity.this,
                                 "Ошибка: " + loginResponse.getMessage(), Toast.LENGTH_LONG).show();
@@ -131,21 +145,21 @@ public class LoginActivity extends AppCompatActivity {
                         "Ошибка сети: " + t.getMessage(), Toast.LENGTH_LONG).show();
 
                 // Для тестирования без сервера - использовать демо-режим
-                useDemoMode(username, password);
+                useDemoMode(email, password);
             }
         });
     }
 
-    private void handleSuccessfulLogin(LoginResponse loginResponse, String username, String password) {
+    private void handleSuccessfulLogin(LoginResponse loginResponse, String email, String password) {
         // Сохранение данных пользователя
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         if (checkBoxRemember.isChecked()) {
-            editor.putString(KEY_USERNAME, username);
+            editor.putString(KEY_EMAIL, email);
             editor.putString(KEY_PASSWORD, password);
             editor.putBoolean(KEY_REMEMBER, true);
         } else {
-            editor.remove(KEY_USERNAME);
+            editor.remove(KEY_EMAIL);
             editor.remove(KEY_PASSWORD);
             editor.putBoolean(KEY_REMEMBER, false);
         }
@@ -157,19 +171,19 @@ public class LoginActivity extends AppCompatActivity {
         }
         editor.apply();
 
-        // Переход к выбору операции
-        Intent intent = new Intent(LoginActivity.this, OperationSelectionActivity.class);
+        // Переход к сканированию QR-кода склада
+        Intent intent = new Intent(LoginActivity.this, WarehouseQRActivity.class);
         startActivity(intent);
         finish();
     }
 
-    private void useDemoMode(String username, String password) {
+    private void useDemoMode(String email, String password) {
         // Демо-режим для тестирования без сервера
-        if ("admin".equals(username) && "123456".equals(password)) {
+        if ("admin@warehouse.com".equals(email) && "123456".equals(password)) {
             SharedPreferences.Editor editor = sharedPreferences.edit();
 
             if (checkBoxRemember.isChecked()) {
-                editor.putString(KEY_USERNAME, username);
+                editor.putString(KEY_EMAIL, email);
                 editor.putString(KEY_PASSWORD, password);
                 editor.putBoolean(KEY_REMEMBER, true);
             }
@@ -179,7 +193,8 @@ public class LoginActivity extends AppCompatActivity {
             editor.putString(KEY_FULL_NAME, "Демо Пользователь");
             editor.apply();
 
-            Intent intent = new Intent(LoginActivity.this, OperationSelectionActivity.class);
+            // Переход к сканированию склада
+            Intent intent = new Intent(LoginActivity.this, WarehouseQRActivity.class);
             startActivity(intent);
             finish();
         } else {

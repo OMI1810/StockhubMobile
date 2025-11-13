@@ -1,24 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#f5f5f5"
     android:padding="24dp">
 
-    <!-- Заголовок -->
+    <!-- Заголовок с информацией о пользователе и складе -->
     <TextView
         android:id="@+id/textViewWelcome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Добро пожаловать!"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="#333333"
         android:gravity="center"
         android:layout_marginBottom="40dp"
-        android:padding="16dp" />
+        android:padding="16dp"
+        android:background="#FFFFFF"
+        android:elevation="4dp" />
 
     <!-- Карточка выбора операции -->
     <androidx.cardview.widget.CardView

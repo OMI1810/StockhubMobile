@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#FFFFFF"
+    android:padding="16dp"
+    android:layout_marginBottom="8dp"
+    android:elevation="2dp">
+
+    <!-- Верхняя строка: информация о коде -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
+
+        <TextView
+            android:id="@+id/textCodeType"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Тип кода"
+            android:textSize="14sp"
+            android:textColor="#666666" />
+
+        <Button
+            android:id="@+id/buttonRemove"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="❌"
+            android:backgroundTint="#F44336"
+            android:textColor="#FFFFFF"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:padding="8dp" />
+
+    </LinearLayout>
+
+    <!-- Содержимое кода -->
+    <TextView
+        android:id="@+id/textCodeContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Код"
+        android:textSize="16sp"
+        android:textColor="#333333"
+        android:textStyle="bold"
+        android:background="#f8f8f8"
+        android:padding="8dp"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="monospace" />
+
+    <!-- Время сканирования -->
+    <TextView
+        android:id="@+id/textTimestamp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Время"
+        android:textSize="12sp"
+        android:textColor="#999999"
+        android:layout_marginBottom="12dp" />
+
+    <!-- Поле для информации о товаре -->
+    <EditText
+        android:id="@+id/editProductInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Введите информацию о товаре (название, описание)..."
+        android:textSize="14sp"
+        android:minLines="2"
+        android:maxLines="4"
+        android:background="@drawable/edit_text_background"
+        android:padding="12dp"
+        android:textColor="#333333" />
+
+</LinearLayout>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#ffffff">
+
+    <!-- Заголовок -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="🔍 Сканирование склада"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#333333"
+        android:gravity="center"
+        android:padding="16dp"
+        android:background="#E3F2FD" />
+
+    <!-- Статус -->
+    <TextView
+        android:id="@+id/statusText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Наведите камеру на QR-код склада"
+        android:textSize="16sp"
+        android:textColor="#2196F3"
+        android:gravity="center"
+        android:padding="12dp" />
+
+    <!-- Сканер -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#000000">
+
+        <androidx.camera.view.PreviewView
+            android:id="@+id/camera_preview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <View
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_gravity="center"
+            android:background="@drawable/scanner_frame" />
+
+    </FrameLayout>
+
+    <!-- Кнопка ручного ввода -->
+    <Button
+        android:id="@+id/buttonManual"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Демо режим (тестирование)"
+        android:backgroundTint="#FF9800"
+        android:textColor="#FFFFFF"
+        android:layout_margin="16dp" />
+
+</LinearLayout>

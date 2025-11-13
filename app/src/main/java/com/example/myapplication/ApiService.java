@@ -12,11 +12,11 @@ public interface ApiService {
     @POST("api/auth/login")
     Call<LoginResponse> login(@Body LoginRequest loginRequest);
 
-    // Отправка операции на склад
+    // Получение информации о товаре по штрих-коду
+    @GET("api/warehouse/product")
+    Call<ProductInfoResponse> getProductInfo(@Query("barcode") String barcode);
+
+    // Отправка операции на склад (если нужно)
     @POST("api/warehouse/operation")
     Call<OperationResponse> sendOperation(@Body OperationRequest operationRequest);
-
-    // Получение информации о товаре по QR-коду
-    @GET("api/warehouse/product")
-    Call<ProductInfoResponse> getProductInfo(@Query("qrCode") String qrCode);
 }
